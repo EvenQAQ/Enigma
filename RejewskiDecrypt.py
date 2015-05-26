@@ -132,14 +132,4 @@ def decrypt_rotorset_config():
 
 if __name__ == '__main__':
     # chain_classify()
-    # table_0 = {'a'0: 'n', 'c': 'u', 'b': 'z', 'e': 'm', 'd': 'g', 'g': 'd', 'f': 'l', 'i': 'y', 'h': 's', 'k': 't',
-    #          'j': 'p', 'm': 'e', 'l': 'f', 'o': 'r', 'n': 'a', 'q': 'x', 'p': 'j', 's': 'h', 'r': 'o', 'u': 'c',
-    #          't': 'k', 'w': 'v', 'v': 'w', 'y': 'i', 'x': 'q', 'z': 'b'}
-    # table_1 = {'a': 'c', 'c': 'm', 'b': 'o', 'e': 'u', 'd': 'p', 'g': 'e', 'f': 't', 'i': 's', 'h': 'r', 'k': 'w',
-    #            'j': 'v', 'm': 'y', 'l': 'x', 'o': 'a', 'n': 'z', 'q': 'd', 'p': 'b', 's': 'g', 'r': 'f', 'u': 'i',
-    #            't': 'h', 'w': 'k', 'v': 'j', 'y': 'n', 'x': 'l', 'z': 'q'}
-    # print calc_earmark(table_0)
     print decrypt_rotorset_config()
-    # midtable = generate_middle_table()
-    # print midtable
-    # print calc_middle_table('012', 'abc')

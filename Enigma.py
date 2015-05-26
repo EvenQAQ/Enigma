@@ -285,7 +285,5 @@ class EnigmaMachine():
 
 if __name__ == '__main__':
     machine = EnigmaMachine()
-    # machine.start()
-    # print machine.encrypt_str('abcabc')
     machine.config_rotorset()
     machine.start()
