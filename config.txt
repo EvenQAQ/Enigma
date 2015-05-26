@@ -1,0 +1,5 @@
+[rotorset]
+position = 012
+config = ssd
+[plugboard]
+config = {"a": "j", "b": "z", "e": "q", "f": "n", "h": "k", "s": "f"}
