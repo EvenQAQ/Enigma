@@ -9,7 +9,7 @@ import ConfigParser
 import json
 
 
-class Rotor():
+class Rotor:
     """
     转子，进行加密的部件
     """
@@ -70,7 +70,7 @@ class Rotor():
         return '<Rotor %r>' % self.rotor_type
 
 
-class Keyboard():
+class Keyboard:
     """
     键盘，输入使用
     """
@@ -91,7 +91,7 @@ class Keyboard():
                 print 'ERROR: illegal keybord input.'
 
 
-class Lampboard():
+class Lampboard:
     """
     灯盘,输出一个字母,代表经过加密之后的字母
     """
@@ -108,7 +108,7 @@ class Lampboard():
         print 'Lampboard: ' + char
 
 
-class Plugboard():
+class Plugboard:
     """
     插线板, 转子进行加密后, 为了进一步提高安全性而增加的装置
     """
@@ -124,7 +124,7 @@ class Plugboard():
             self.table[v] = k
 
 
-class RotorSet():
+class RotorSet:
     """
     三个转子组成的转子簇
     """
@@ -215,7 +215,7 @@ class RotorSet():
         return r_dict
 
 
-class EnigmaMachine():
+class EnigmaMachine:
     """
     恩格玛机
     """
@@ -243,7 +243,6 @@ class EnigmaMachine():
         :param config_str: str, 转子的配置字符串表示, 如'abc'
         """
         self.rotorset.config(position_str, config_str)
-
 
     def config_plugboard(self):
         """
