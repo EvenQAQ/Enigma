@@ -7,6 +7,7 @@ import cPickle as p
 import Enigma
 from string import ascii_lowercase
 from copy import deepcopy
+from random import sample
 
 
 def chain_classify():
@@ -78,7 +79,8 @@ def generate_middle_table():
     :return: dict
     """
     c_dict = dict()
-    for random_code in itertools.permutations(ascii_lowercase, 3):
+    while True:
+        random_code = sample(list(ascii_lowercase), 3)
         machine = Enigma.EnigmaMachine()
         machine.config_rotorset()
         random_code *= 2
@@ -110,26 +112,26 @@ def is_match(middle_table, possible_config):
 
 
 def decrypt_rotorset_config():
-    print 'INFO: start'
-    middle_table = {'a': 'u', 'c': 'n', 'b': 'r', 'e': 'g', 'd': 'm', 'g': 'a', 'f': 'o', 'i': 'w', 'h': 't', 'k': 's',
-                    'j': 'e', 'm': 'p', 'l': 'v', 'o': 'z', 'n': 'd', 'q': 'k', 'p': 'b', 's': 'q', 'r': 'l', 'u': 'i',
-                    't': 'x', 'w': 'f', 'v': 'y', 'y': 'c', 'x': 'h', 'z': 'j'}
-    # middle_table = generate_middle_table()
+    print 'INFO: start to generate middle table of today'
+    # middle_table = {'a': 'u', 'c': 'n', 'b': 'r', 'e': 'g', 'd': 'm', 'g': 'a', 'f': 'o', 'i': 'w', 'h': 't',
+    #                 'k': 's', 'j': 'e', 'm': 'p', 'l': 'v', 'o': 'z', 'n': 'd', 'q': 'k', 'p': 'b', 's': 'q',
+    #                 'r': 'l', 'u': 'i', 't': 'x', 'w': 'f', 'v': 'y', 'y': 'c', 'x': 'h', 'z': 'j'}
+    middle_table = generate_middle_table()
     middle_table_copy = deepcopy(middle_table)
     earmark = calc_earmark(middle_table_copy)
     with open('data.pkl') as f:
-        print 'INFO: open'
         earmark_table = p.load(f)
-        print 'INFO: load'
+        print 'INFO: load earmark dict'
         possible_list = earmark_table[earmark]
-        print len(earmark_table)
+        # print len(earmark_table)
         del earmark_table
-        print len(possible_list)
+        # print len(possible_list)
         for possible_config in possible_list:
             if is_match(middle_table, possible_config):
-                return possible_config
+                print "The config is:", possible_config
+                break
 
 
 if __name__ == '__main__':
     # chain_classify()
-    print decrypt_rotorset_config()
+    decrypt_rotorset_config()
