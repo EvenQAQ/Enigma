@@ -133,6 +133,8 @@ class RotorSet:
         self.rotorA = Rotor(0, 'computersvwxyzabdfghijklnq')
         self.rotorB = Rotor(1, 'hijklnqcomputersvwxyzabdfg')
         self.rotorC = Rotor(2, 'puteabdfgrsvimwxyjhklnqcoz')
+        self.position_str = '012'
+        self.config_str = 'aaa'
         self.rotorList = self.rotorListSort = [self.rotorA, self.rotorB, self.rotorC]
         self.reflect_table = self._reflect_table()
 
@@ -142,6 +144,8 @@ class RotorSet:
         :param position_str: str, 转子顺序的字符串表示，如'102'
         :param config_str: str, 转子的配置字符串表示, 如'abc'
         """
+        self.position_str = position_str
+        self.config_str = config_str
         for r in self.rotorList:
             r.rotor_type = int(position_str[self.rotorList.index(r)])
             r.rotor_times = ord(config_str[self.rotorList.index(r)]) - ord('a')
@@ -156,6 +160,11 @@ class RotorSet:
         c_dict = self.total_table()
         cipher_char = c_dict[char]
         self.change_status()
+        return cipher_char
+
+    def output1(self, char):
+        c_dict = self.total_table()
+        cipher_char = c_dict[char]
         return cipher_char
 
     def change_status(self):
@@ -267,7 +276,9 @@ class EnigmaMachine:
                 self.config_rotorset()
                 self.config_plugboard()
             else:
+                clear_char = self.plugboard.table[clear_char]
                 cipher_char = self.rotorset.output(clear_char)
+                cipher_char = self.plugboard.table[cipher_char]
                 self.lampboard.output(cipher_char)
 
     def encrypt_str(self, clear_text):
@@ -278,11 +289,15 @@ class EnigmaMachine:
         """
         cipher_text = ''
         for char in clear_text:
-            cipher_text += self.rotorset.output(char)
+            char = self.plugboard.table[char]
+            cipher_char = self.rotorset.output(char)
+            cipher_char = self.plugboard.table[cipher_char]
+            cipher_text += cipher_char
         return cipher_text
 
 
 if __name__ == '__main__':
     machine = EnigmaMachine()
     machine.config_rotorset()
+    # machine.config_plugboard()
     machine.start()

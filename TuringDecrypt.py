@@ -7,41 +7,60 @@ from copy import deepcopy
 from string import ascii_lowercase
 
 
-def generate_encrypt():
-    clear_text = 'keinebesonderenereignisse'
+def generate_encrypt(clear_text):
     machine = Enigma.EnigmaMachine()
     machine.config_rotorset()
+    machine.config_plugboard()
     return machine.encrypt_str(clear_text)
 
 
 def decrypt_rotorset_config():
     possible_list = []
     for position_str in itertools.permutations('012', 3):
-        for config_str in itertools.permutations(ascii_lowercase, 3):
+        for config_str in itertools.product(ascii_lowercase, ascii_lowercase, ascii_lowercase):
             if is_match(position_str, config_str):
                 possible_list.append((position_str, config_str))
-        break
     return possible_list
 
 
+def decrypt_possible_config(possible_list):
+    checked_list = list()
+    for item in possible_list:
+        if is_match(item[0], item[1]):
+            checked_list.append(item)
+    return checked_list
+
+
 def is_match(position_str, config_str):
-    rotor_set0 = Enigma.RotorSet()
-    rotor_set0.config(position_str, config_str)
-    rotor_set1 = deepcopy(rotor_set0)
-    rotor_set5 = deepcopy(rotor_set0)
-    rotor_set1.change_status()
-    for i in range(5):
-        rotor_set5.change_status()
+    rotor_set_0 = Enigma.RotorSet()
+    rotor_set_0.config(position_str, config_str)
+    rotor_set_i = deepcopy(rotor_set_0)
+    rotor_set_j = deepcopy(rotor_set_0)
+    rotor_set_k = deepcopy(rotor_set_0)
+    for i in range(7):
+        rotor_set_0.change_status()
+    for i in range(14):
+        rotor_set_i.change_status()
+    for i in range(16):
+        rotor_set_j.change_status()
+    for i in range(22):
+        rotor_set_k.change_status()
     for char in ascii_lowercase:
-        out_put = rotor_set5.output(rotor_set1.output(rotor_set1.output(char)))
-        if out_put != char:
-            return False
+        out_put = rotor_set_k.output1(rotor_set_j.output1(rotor_set_i.output1(rotor_set_0.output1(char))))
+        if out_put == char:
+            return True
     else:
-        return True
+        return False
+
+
 
 
 if __name__ == '__main__':
     # print decrypt_rotorset_config()
-    print generate_encrypt()
+    clear_text = 'keinebesonderenereignisse'
+    print clear_text
+    print generate_encrypt(clear_text)
+    p_list = decrypt_rotorset_config()
+    print len(p_list)
 
 
